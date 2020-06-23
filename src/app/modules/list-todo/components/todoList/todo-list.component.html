@@ -1,0 +1,92 @@
+<mat-toolbar-row color="primary">
+  <span>
+    <b>
+      {{chooseUserName}}'s Todos
+        <button mat-raised-button color="primary"  aria-label="Example icon button with a delete icon" (click)="backClicked()">
+          back
+        </button>
+    </b>
+  </span>
+</mat-toolbar-row>
+<!--  -->
+
+<!-- <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" >
+
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef>
+        <h2>No. </h2>
+    </th>
+    <td mat-cell *matCellDef="let element; let i = index;" >
+      {{i+1}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="task">
+    <th mat-header-cell *matHeaderCellDef>
+      <h2>Task</h2>
+    </th>
+    <td mat-cell *matCellDef="let element">
+      {{element.task}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="description">
+    <th mat-header-cell *matHeaderCellDef>
+      <h2>Description </h2>
+    </th>
+    <td mat-cell *matCellDef="let element">
+       {{element.description}}
+      </td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef> <h2>Action </h2> </th>
+      <td mat-cell *matCellDef="let element" class="action-link">
+        <button mat-raised-button color="primary" (click)="openDialog('Edit',element)">Edit</button> |
+        <button mat-raised-button color="warn" (click)="deleteRowData('Delete',element)">Delete</button>
+      </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table> -->
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
+    <th mat-header-cell *matHeaderCellDef>
+       <h2> {{column}} </h2>
+    </th>
+    <ng-container *ngIf="column === 'id'">
+      <td mat-cell *matCellDef="let element;let i = index ">
+        {{i+1}}
+      </td>
+    </ng-container>
+    <ng-container *ngIf="column !== 'actions'">
+      <td mat-cell *matCellDef="let element">
+          {{element[column]}}
+      </td>
+    </ng-container>
+    <td mat-cell *matCellDef="let element">
+        <button mat-raised-button color="primary" (click)="openDialog('Edit',element)">Edit</button> |
+        <button mat-raised-button color="warn" (click)="deleteRowData('Delete',element)">Delete</button>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<div *ngIf="dataSource.length === 0" style="border: 1px solid black;background-color: darkgrey;color: black;font-size: 20px;text-align: center;padding: 6px 6px;">
+    <b> No Todos found for {{chooseUserName}}...!!</b>
+</div>
+
+
+<div class="container">
+  <button mat-fab color="primary" aria-label="Example icon button with a delete icon" (click)="openDialog('Add',{})">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+
+
+
+

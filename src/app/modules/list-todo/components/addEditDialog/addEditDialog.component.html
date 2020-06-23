@@ -1,0 +1,30 @@
+<!-- dialog-box.component.html -->
+<h1 mat-dialog-title><strong>{{action}}</strong> Todo </h1>
+<div mat-dialog-content>
+  <div *ngIf="action != 'Delete'; else elseTemplate">
+    <form  #toDoData="ngForm">
+      <mat-form-field>
+        <input placeholder="Task" matInput name="taskValidation" [(ngModel)]="task" (input)="outTask = $event.target.value" required ngModel #taskValidation="ngModel">
+      </mat-form-field>
+      <mat-error *ngIf="!taskValidation.valid">
+        Task Name Required
+      </mat-error>
+
+      <mat-form-field>
+        <textarea matInput placeholder="Description" name="descriptionValidation" [(ngModel)]="description" (input)="outDescription = $event.target.value" rows="5" required ngModel #descriptionValidation="ngModel"></textarea>
+      </mat-form-field>
+      <mat-error *ngIf="!descriptionValidation.valid">
+        Description Required
+      </mat-error>
+
+      <div mat-dialog-actions>
+        <button mat-button (click)="doAction()" color="warn" [disabled]="!toDoData.valid">{{action}}</button>
+        <button mat-button (click)="closeDialog()" mat-flat-button>Cancel</button>
+      </div>
+    </form>
+  </div>
+  <ng-template #elseTemplate>
+    Do you want to delete <b>{{local_data.task}}</b> task ?
+  </ng-template>
+</div>
+

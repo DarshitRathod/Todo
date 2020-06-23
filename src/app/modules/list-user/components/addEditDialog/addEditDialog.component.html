@@ -1,0 +1,47 @@
+<!-- dialog-box.component.html -->
+<h1 mat-dialog-title><strong>{{action}}</strong> User </h1>
+<div mat-dialog-content>
+  <div *ngIf="action != 'Delete'; else elseTemplate">
+    <form  #userData="ngForm">
+      <mat-form-field>
+        <input placeholder="First Name" matInput  name="firstNameVal" [(ngModel)] ="firstName" (input)="outFirstName = $event.target.value" required ngModel #firstNameVal="ngModel">
+      </mat-form-field>
+      <mat-error *ngIf="!firstNameVal.valid">
+        First Name Required
+      </mat-error>
+
+      <mat-form-field>
+        <input placeholder="Last Name" matInput name="lastName" [(ngModel)]="lastName" (input)="outLastName = $event.target.value" required ngModel #lastNameVal="ngModel">
+      </mat-form-field>
+      <mat-error *ngIf="!lastNameVal.valid">
+        Last Name Required
+      </mat-error>
+
+      <mat-form-field>
+        <input placeholder="Email" matInput name="email"  [(ngModel)]="eMail" (input)="outEmail = $event.target.value" required ngModel #emailVal="ngModel">
+      </mat-form-field>
+      <mat-error *ngIf="!emailVal.valid && emptyMessage()">
+        Email Required
+      </mat-error>
+      <mat-error *ngIf="errorEmailMessage.length > 0" >
+          {{errorEmailMessage}}
+      </mat-error>
+      <div mat-dialog-actions>
+        <button mat-button (click)="doAction();" color="warn" [disabled]="!userData.valid">{{action}}</button>
+        <button mat-button (click)="closeDialog()" mat-flat-button>Cancel</button>
+      </div>
+  </form>
+  </div>
+
+  <ng-template #elseTemplate>
+    Do you want to delete <b>{{local_data.firstName}}</b>&nbsp;<b>{{local_data.lastName}}</b>?
+  </ng-template>
+</div>
+<!-- <div mat-dialog-actions *ngIf="action === 'Add'">
+  <button mat-button (click)="doAction();" color="warn" [disabled]="!userData.valid">{{action}}</button>
+  <button mat-button (click)="closeDialog()" mat-flat-button>Cancel</button>
+</div>
+<div mat-dialog-actions *ngIf="action === 'Edit'">
+  <button mat-button (click)="doAction();" color="warn">{{action}}</button>
+  <button mat-button (click)="closeDialog()" mat-flat-button>Cancel</button>
+</div> -->
