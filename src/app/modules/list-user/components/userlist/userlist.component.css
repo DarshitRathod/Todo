@@ -1,0 +1,16 @@
+table {
+  width: 100%;
+}
+.example-button-row {
+  display: table-cell;
+}
+:host{
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.container{
+  position: fixed;
+  right: 50px;
+  bottom: 50px;
+}
