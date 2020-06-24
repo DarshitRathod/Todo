@@ -20,46 +20,24 @@ export interface UsersData {
 export class DialogComponent implements OnInit {
 
   form: FormGroup;
-  action:string;
   local_data:any;
-  eMail:string;
-  process:boolean;
-  firstName:string;
-  lastName:string;
-  outFirstName:string;
-  outLastName:string;
-  outEmail:string;
   errorEmailMessage="";
-  errorFirstNameMessage="";
-  errorLastNameMessage="";
+  userList:any;
   id:number;
-
-
+  userObj = {
+    id:0,
+    firstName:"",
+    lastName:"",
+    email:"",
+    action:""
+  }
     constructor(
     private dialogRef: MatDialogRef<DialogComponent>,
     private userDataService:UserdataService,
     private dialog: MatDialog,
-    @Optional() @Inject(MAT_DIALOG_DATA) public data:UsersData){
-      if(!data.hasOwnProperty("email")){
-        this.eMail = "";
-      }if(!data.hasOwnProperty("firstName")){
-        this.firstName = "";
-      }if(!data.hasOwnProperty("lastName")){
-        this.lastName = "";
-      }if(data.hasOwnProperty("action")){
-        this.action = "Add";
-      }
-      if(data.hasOwnProperty("id")){
-        this.id = data.id;
-      }
-      if(data.hasOwnProperty("email") && data.hasOwnProperty("firstName") && data.hasOwnProperty("lastName")){
-        this.eMail = data.email;
-        this.firstName = data.firstName;
-        this.lastName = data.lastName;
-        this.local_data = data
-        this.action = this.local_data.action;
-      }
-    }
+    @Optional() @Inject(MAT_DIALOG_DATA) private data:UsersData){ }
+
+
 
     emptyMessage(){
       this.errorEmailMessage = "";
@@ -67,72 +45,58 @@ export class DialogComponent implements OnInit {
     }
 
     //Validation Perform
-    doAction(){
+    addEditAction(){
 
     //----------------------------------1-way---------------------------------------------------------
     //Check for Add operation
-    if(this.action === "Add"){
+    if(this.userObj.action === "Add"){
       let flagAddData = true;
 
-    for(let user of this.userDataService.userAndTodoData['user']){
-      if(((user.email.toString() === this.outEmail.trim()) && user.id !== this.id)){
+    for(let user of this.userList){
+      if(((user.email.toString() === this.userObj.email.trim()) && user.id !== this.userObj.id)){
         this.errorEmailMessage = "Email-id already Exists";
-        console.log("User list is ",this.userDataService.userAndTodoData['user']);
+        console.log("User list is ",this.userList);
         flagAddData = false;
         break;
       }
     }
 
     if(flagAddData){
-      let obj;
-      if(this.action === "Add"){
-        obj = {
-          firstName : this.outFirstName.trim(),
-          lastName : this.outLastName.trim(),
-          email : this.outEmail.trim(),
-          action : this.action
-        }
+
+      this.userObj.firstName = this.userObj.firstName.trim();
+      this.userObj.lastName = this.userObj.lastName.trim();
+      this.userObj.email = this.userObj.email.trim();
+      this.userObj.action = this.userObj.action;
+
+      this.dialogRef.close({event:this.userObj.action,data:this.userObj})
       }
-      this.dialogRef.close({event:this.action,data:obj})
-    }
     }
 
     //Check for Update operation
-    if(this.action === "Edit"){
+    if(this.userObj.action === "Edit"){
 
-      let flagEditData = true
+      let flagEditData = true;
 
-      if(this.outEmail === undefined){
-        this.outEmail = this.eMail
-      }
-      if(this.outFirstName === undefined){
-        this.outFirstName = this.firstName
-      }
-      if(this.outLastName === undefined){
-        this.outLastName = this.lastName
-      }
       //Check for conditions
-      for(let user of this.userDataService.userAndTodoData['user']){
-        if(((user.email.toString() === this.outEmail.trim()) && user.id !== this.id)){
+      for(let user of this.userList){
+        if(((user.email.toString() === this.userObj.email.trim()) && user.id !== this.userObj.id)){
           this.errorEmailMessage = "Email-id already Exists";
-          console.log("User list is ",this.userDataService.userAndTodoData['user']);
+          console.log("User list is ",this.userList);
           flagEditData = false;
           break;
         }
       }
 
     if(flagEditData){
-      let obj;
-         obj = {
-          id:this.id,
-          firstName : this.outFirstName.trim(),
-          lastName : this.outLastName.trim(),
-          email : this.outEmail.trim(),
-          action : this.action
-        }
-      this.dialogRef.close({event:this.action,data:obj})
+      this.userObj.id = this.userObj.id;
+      this.userObj.firstName = this.userObj.firstName.trim();
+      this.userObj.lastName = this.userObj.lastName.trim();
+      this.userObj.email = this.userObj.email.trim();
+      this.userObj.action = this.userObj.action;
+
+      this.dialogRef.close({event:this.userObj.action,data:this.userObj})
     }
-  }
+    }
   }
 
     //Close Dialog
@@ -141,7 +105,7 @@ export class DialogComponent implements OnInit {
     // this.local_data.firstName = this.firstName
     // this.local_data.lastName = this.lastName
     this.dialogRef.close({event:'Cancel'});
-    console.log("Closing Dialog ",this.userDataService.userAndTodoData['user']);
+    console.log("Closing Dialog ",this.userList);
     }
 
 
@@ -153,12 +117,26 @@ export class DialogComponent implements OnInit {
     // this.local_data.firstName = this.firstName
     // this.local_data.lastName = this.lastName
     this.dialogRef.close({event:'Cancel'});
-    console.log("Closing Dialog ",this.userDataService.userAndTodoData['user']);
+    console.log("Closing Dialog ",this.userList);
   }
 
 
   ngOnInit(): void {
     console.log("Data")
+    if(this.data.hasOwnProperty("action")){
+      this.userObj.action = "Add";
+    }
+    if(this.data.hasOwnProperty("id")){
+      this.userObj.id = this.data.id;
+    }
+    if(this.data.hasOwnProperty("email") && this.data.hasOwnProperty("firstName") && this.data.hasOwnProperty("lastName")){
+      this.userObj.email = this.data.email;
+      this.userObj.firstName = this.data.firstName;
+      this.userObj.lastName = this.data.lastName;
+      this.local_data = this.data
+      this.userObj.action = this.local_data.action;
+    }
+     this.userList = this.userDataService.getUserData()
   }
 
 }

@@ -1,24 +1,24 @@
 <!-- dialog-box.component.html -->
-<h1 mat-dialog-title><strong>{{action}}</strong> Todo </h1>
+<h1 mat-dialog-title><strong>{{this.todoObj.action}}</strong> Todo </h1>
 <div mat-dialog-content>
-  <div *ngIf="action != 'Delete'; else elseTemplate">
+  <div *ngIf="this.todoObj.action != 'Delete'; else elseTemplate">
     <form  #toDoData="ngForm">
       <mat-form-field>
-        <input placeholder="Task" matInput name="taskValidation" [(ngModel)]="task" (input)="outTask = $event.target.value" required ngModel #taskValidation="ngModel">
+        <input placeholder="Task" matInput name="taskValidation" [(ngModel)]="this.todoObj.task"  required  #taskValidation="ngModel">
       </mat-form-field>
       <mat-error *ngIf="taskValidation.invalid && taskValidation.errors.required">
         Task Name Required
       </mat-error>
 
       <mat-form-field>
-        <textarea matInput placeholder="Description" name="descriptionValidation" [(ngModel)]="description" (input)="outDescription = $event.target.value" rows="5" required ngModel #descriptionValidation="ngModel"></textarea>
+        <textarea matInput placeholder="Description" name="descriptionValidation" [(ngModel)]="this.todoObj.description"  rows="5" required  #descriptionValidation="ngModel"></textarea>
       </mat-form-field>
       <mat-error *ngIf="descriptionValidation.invalid && descriptionValidation.errors.required">
         Description Required
       </mat-error>
 
       <div mat-dialog-actions>
-        <button mat-button (click)="doAction()" color="warn" [disabled]="!toDoData.valid">{{action}}</button>
+        <button mat-button (click)="addEditAction()" color="warn" [disabled]="!toDoData.valid">{{this.todoObj.action}}</button>
         <button mat-button (click)="closeDialog()" mat-flat-button>Cancel</button>
       </div>
     </form>

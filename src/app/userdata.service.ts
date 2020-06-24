@@ -4,7 +4,7 @@ import { Injectable, Input } from '@angular/core';
   providedIn: 'root'
 })
 export class UserdataService {
-  public userAndTodoData =  {
+  private userAndTodoData =  {
     "user": [{
             "id": 1,
             "firstName": "Bhavik",
@@ -45,17 +45,25 @@ export class UserdataService {
     ]
   }
 
+  public getUserData(){
+    return this.userAndTodoData['user'];
+  }
+
+  public getTodoData(){
+    return this.userAndTodoData['todo'];
+  }
+
   //Users Operations
   addUser(row_obj){
-    let flag = false;
+    let isUserExist = false;
     this.userAndTodoData['user'].forEach((element) => {
       if (element.email.toString() === row_obj.email) {
-        flag = true;
+        isUserExist = true;
       }
     });
 
     //If flag === false then push data
-    if(!flag){
+    if(!isUserExist){
       this.userAndTodoData['user'].push({
             id: this.userAndTodoData['user'].length + 1,
             firstName:row_obj.firstName,
@@ -67,27 +75,24 @@ export class UserdataService {
     return false;
   }
   editUser(row_obj){
-    let flag;
-    if(!flag){
-      this.userAndTodoData['user'].forEach((element) => {
-          if(element.id === row_obj.id){
-            element.id === row_obj.id
-            element.email = row_obj.email;
-            element.firstName = row_obj.firstName;
-            element.lastName = row_obj.lastName;
-          }
-      })
-      return true
-    }
+    this.userAndTodoData['user'].forEach((element) => {
+      if(element.id === row_obj.id){
+        element.id === row_obj.id
+        element.email = row_obj.email;
+        element.firstName = row_obj.firstName;
+        element.lastName = row_obj.lastName;
+      }
+    })
+    return true
   }
   deleteUser(row_obj){
-    let flag = true;
+    let isUserTodoExist = true;
     this.userAndTodoData['todo'].forEach((element) => {
       if (element.userid === row_obj.id) {
-        flag=false;
+          isUserTodoExist=false;
       }
     });
-    if(!flag){
+    if(!isUserTodoExist){
       return false;
     }else{
         let i = 0

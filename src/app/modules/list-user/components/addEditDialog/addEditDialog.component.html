@@ -1,24 +1,24 @@
 <!-- dialog-box.component.html -->
-<h1 mat-dialog-title><strong>{{action}}</strong> User </h1>
+<h1 mat-dialog-title><strong>{{userObj.action}}</strong> User </h1>
 <div mat-dialog-content>
   <div *ngIf="action != 'Delete'; else elseTemplate">
     <form  #userData="ngForm">
       <mat-form-field>
-        <input placeholder="First Name" matInput  name="firstNameValidation" [(ngModel)] ="firstName" (input)="outFirstName = $event.target.value" required  #firstNameValidation="ngModel">
+        <input placeholder="First Name" matInput  name="firstNameValidation" [(ngModel)] ="userObj.firstName"  required  #firstNameValidation="ngModel">
       </mat-form-field>
       <mat-error *ngIf=" firstNameValidation.invalid &&  firstNameValidation.errors.required">
         First Name Required
       </mat-error>
 
       <mat-form-field>
-        <input placeholder="Last Name" matInput name="lastNameValidation" [(ngModel)]="lastName" (input)="outLastName = $event.target.value" required  #lastNameValidation="ngModel">
+        <input placeholder="Last Name" matInput name="lastNameValidation" [(ngModel)]="userObj.lastName"  required  #lastNameValidation="ngModel">
       </mat-form-field>
       <mat-error *ngIf="lastNameValidation.invalid && lastNameValidation.errors.required">
         Last Name Required
       </mat-error>
 
       <mat-form-field>
-        <input placeholder="Email" matInput name="emailValidation"  [(ngModel)]="eMail" (input)="outEmail = $event.target.value" required  #emailValidation="ngModel">
+        <input placeholder="Email" matInput name="emailValidation"  [(ngModel)]="userObj.email"  required  #emailValidation="ngModel">
       </mat-form-field>
       <mat-error *ngIf="emailValidation.invalid && emailValidation.errors.required &&  emptyMessage()">
         Email Required
@@ -27,7 +27,7 @@
           {{errorEmailMessage}}
       </mat-error>
       <div mat-dialog-actions>
-        <button mat-button (click)="doAction();" color="warn" [disabled]="!userData.valid">{{action}}</button>
+        <button mat-button (click)="addEditAction();" color="warn" [disabled]="!userData.valid">{{userObj.action}}</button>
         <button mat-button (click)="closeDialog()" mat-flat-button>Cancel</button>
       </div>
   </form>

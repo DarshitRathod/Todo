@@ -13,13 +13,11 @@ export class DialogAlertComponent implements OnInit {
   msg:string
   constructor(
     private dialogRef: MatDialogRef<DialogAlertComponent>,
-    @Optional() @Inject(MAT_DIALOG_DATA) public data:string)
-    {
-      this.msg = data
-    }
-
+    @Optional() @Inject(MAT_DIALOG_DATA) private data:string)
+    {}
 
   ngOnInit(): void {
+    this.msg = this.data
   }
 
   closeDialog(){

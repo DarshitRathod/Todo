@@ -16,15 +16,16 @@ import { RouterModule } from '@angular/router';
 })
 export class UserlistComponent implements OnInit {
 
-
+  public dataSourceUserList;
+  userList:any;
   constructor(private userDataService:UserdataService,private dialog: MatDialog) { }
 
   @ViewChild(MatTable,{static:true}) table: MatTable<any>;
 
-  public dataSourceUserList;
+
   displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email','actions'];
 
-  openDialog(action,obj) {
+  openAddEditDialog(action,obj) {
     obj.action = action;
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '340px',
@@ -32,41 +33,34 @@ export class UserlistComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result === undefined){
-        this.errorRowData();
-      }else if(result.event == 'Add'){
+      if(result.event == 'Add'){
         this.addRowData(result.data);
-      }else if(result.event == 'Edit'){
+      }if(result.event == 'Edit'){
         this.updateRowData(result.data);
-      }else if(result.event == 'Delete'){
-        //this.deleteRowData(result.data)
       }
     });
   }
 
   //Add User
   addRowData(row_obj){
-    //Check for email exist or not
     if(this.userDataService.addUser(row_obj)){
       this.table.renderRows();
     }
     this.table.renderRows();
-    console.log("After Add Data is ",this.userDataService.userAndTodoData['user']);
+    console.log("After Add Data is ",this.userList);
   }
 
   //Edit User
   updateRowData(row_obj){
-    //console.log("Obj is ",row_obj)
-
     if(this.userDataService.editUser(row_obj)){
       this.table.renderRows();
     }
-    console.log("After Update Data is ",this.userDataService.userAndTodoData['user']);
+    console.log("After Update Data is ",this.userList);
   }
 
   //Delete User
   deleteRowData(action,row_obj){
-
+    console.log(action)
     if(!this.userDataService.deleteUser(row_obj)){
       const dialogRef = this.dialog.open(DialogAlertComponent, {
         width: '250px',
@@ -77,16 +71,13 @@ export class UserlistComponent implements OnInit {
       this.table.renderRows();
     }
 
-    console.log("After Delete Data is ",this.userDataService.userAndTodoData['user']);
-  }
-
-  errorRowData(){
-    console.log("Closing Box")
-    console.log("After Closing box ,  Data is ",this.userDataService.userAndTodoData['user']);
+    console.log("After Delete Data is ",this.userList);
   }
 
   ngOnInit(): void {
-    this.dataSourceUserList = this.userDataService.userAndTodoData['user'];
+    this.dataSourceUserList = this.userDataService.getUserData();
+    this.userList = this.userDataService.getUserData();
+
     console.log("Data")
   }
 
