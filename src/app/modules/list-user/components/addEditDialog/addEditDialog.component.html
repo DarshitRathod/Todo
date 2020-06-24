@@ -1,7 +1,7 @@
 <!-- dialog-box.component.html -->
 <h1 mat-dialog-title><strong>{{userObj.action}}</strong> User </h1>
 <div mat-dialog-content>
-  <div *ngIf="action != 'Delete'; else elseTemplate">
+  <div *ngIf="userObj.action != 'Delete'; else elseTemplate">
     <form  #userData="ngForm">
       <mat-form-field>
         <input placeholder="First Name" matInput  name="firstNameValidation" [(ngModel)] ="userObj.firstName"  required  #firstNameValidation="ngModel">
