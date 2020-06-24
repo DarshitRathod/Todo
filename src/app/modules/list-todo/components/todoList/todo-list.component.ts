@@ -20,9 +20,9 @@ export class TodoListComponent implements OnInit {
 
   @ViewChild(MatTable,{static:true}) table: MatTable<any>;
 
-  constructor(private userDataService:UserdataService,public dialog: MatDialog,private route: ActivatedRoute,private _location: Location) {  }
+  constructor(private userDataService:UserdataService,private dialog: MatDialog,private route: ActivatedRoute,private _location: Location) {  }
 
-  public dataSource = [];
+  public dataSourceTodoList = [];
   displayedColumns: string[] = ['id', 'task', 'description','actions'];
 
   openDialog(action,obj) {
@@ -49,7 +49,7 @@ export class TodoListComponent implements OnInit {
   //Add Todo
   addRowData(row_obj){
     if(this.userDataService.addTodo(row_obj,this.chooseUser)){
-        this.dataSource.push({
+        this.dataSourceTodoList.push({
           id: this.userDataService.userAndTodoData['todo'].length,
           userid:this.chooseUser,
           task:row_obj.task,
@@ -57,13 +57,13 @@ export class TodoListComponent implements OnInit {
         });
       this.table.renderRows();
     }
-    console.log("After Adding  Todo data is ",this.dataSource)
+    console.log("After Adding  Todo data is ",this.dataSourceTodoList)
   }
 
   //Edit Todo
   updateRowData(row_obj){
     if(this.userDataService.editTodo(row_obj,this.chooseUser)){
-      this.dataSource.forEach((element)=>{
+      this.dataSourceTodoList.forEach((element)=>{
         if(element.id === row_obj.id && element.userid === this.chooseUser){
           element.description = row_obj.description.trim();
           element.task = row_obj.task.trim();
@@ -73,7 +73,7 @@ export class TodoListComponent implements OnInit {
       })
       this.table.renderRows();
     }
-   console.log("After Updating Todo data is ",this.dataSource)
+   console.log("After Updating Todo data is ",this.dataSourceTodoList)
   }
 
   //Delete Todo
@@ -81,15 +81,15 @@ export class TodoListComponent implements OnInit {
 
     if(this.userDataService.deleteTodo(row_obj,this.chooseUser)){
         let j=0;
-        this.dataSource.forEach((element)=>{
+        this.dataSourceTodoList.forEach((element)=>{
           if(element.id === row_obj.id && element.userid === this.chooseUser){
-            this.dataSource.splice(j,1);
+            this.dataSourceTodoList.splice(j,1);
           }
         j++;
       })
       this.table.renderRows();
     }
-    console.log("After Delete  Todo data is ",this.dataSource)
+    console.log("After Delete  Todo data is ",this.dataSourceTodoList)
   }
 
   errorRowData(){
@@ -105,7 +105,7 @@ export class TodoListComponent implements OnInit {
       //Push Selected User's Data into DataSource
       this.userDataService.userAndTodoData['todo'].forEach((element)=>{
         if(element.userid === this.chooseUser){
-          this.dataSource.push(element);
+          this.dataSourceTodoList.push(element);
         }
       })
     })
@@ -117,7 +117,7 @@ export class TodoListComponent implements OnInit {
       }
     })
 
-    if(this.dataSource.length === 0){
+    if(this.dataSourceTodoList.length === 0){
       this.noTaskFound =  false;
     }else{
       this.noTaskFound =  true;

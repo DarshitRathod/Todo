@@ -32,9 +32,9 @@ export class DialogComponent implements OnInit {
   userid:number;
 
   constructor(
-    public dialogRef: MatDialogRef<DialogComponent>,
-    public userDataService:UserdataService,
-    public dialog: MatDialog,
+    private dialogRef: MatDialogRef<DialogComponent>,
+    private userDataService:UserdataService,
+    private dialog: MatDialog,
     @Optional() @Inject(MAT_DIALOG_DATA) public data:TodoData)
     {
       if(!data.hasOwnProperty("task")){

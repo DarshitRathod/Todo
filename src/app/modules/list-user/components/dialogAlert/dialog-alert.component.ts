@@ -12,7 +12,7 @@ export class DialogAlertComponent implements OnInit {
 
   msg:string
   constructor(
-    public dialogRef: MatDialogRef<DialogAlertComponent>,
+    private dialogRef: MatDialogRef<DialogAlertComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) public data:string)
     {
       this.msg = data

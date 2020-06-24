@@ -52,7 +52,7 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table> -->
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<table mat-table [dataSource]="dataSourceUserList" class="mat-elevation-z8">
 
   <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
     <th mat-header-cell *matHeaderCellDef>
@@ -80,7 +80,7 @@
 </table>
 
 
-<div *ngIf="dataSource.length === 0" style="border: 1px solid black;background-color: darkgrey;color: black;font-size: 20px;text-align: center;padding: 6px 6px;">
+<div *ngIf="dataSourceUserList.length === 0" style="border: 1px solid black;background-color: darkgrey;color: black;font-size: 20px;text-align: center;padding: 6px 6px;">
   <b> No Users found ...!!</b>
 </div>
 

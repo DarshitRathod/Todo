@@ -36,9 +36,9 @@ export class DialogComponent implements OnInit {
 
 
     constructor(
-    public dialogRef: MatDialogRef<DialogComponent>,
-    public userDataService:UserdataService,
-    public dialog: MatDialog,
+    private dialogRef: MatDialogRef<DialogComponent>,
+    private userDataService:UserdataService,
+    private dialog: MatDialog,
     @Optional() @Inject(MAT_DIALOG_DATA) public data:UsersData){
       if(!data.hasOwnProperty("email")){
         this.eMail = "";

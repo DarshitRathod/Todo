@@ -17,11 +17,11 @@ import { RouterModule } from '@angular/router';
 export class UserlistComponent implements OnInit {
 
 
-  constructor(private userDataService:UserdataService,public dialog: MatDialog) { }
+  constructor(private userDataService:UserdataService,private dialog: MatDialog) { }
 
   @ViewChild(MatTable,{static:true}) table: MatTable<any>;
 
-  public dataSource;
+  public dataSourceUserList;
   displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email','actions'];
 
   openDialog(action,obj) {
@@ -86,7 +86,7 @@ export class UserlistComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dataSource = this.userDataService.userAndTodoData['user'];
+    this.dataSourceUserList = this.userDataService.userAndTodoData['user'];
     console.log("Data")
   }
 
