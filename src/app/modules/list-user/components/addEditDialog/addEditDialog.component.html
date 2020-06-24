@@ -4,23 +4,23 @@
   <div *ngIf="action != 'Delete'; else elseTemplate">
     <form  #userData="ngForm">
       <mat-form-field>
-        <input placeholder="First Name" matInput  name="firstNameVal" [(ngModel)] ="firstName" (input)="outFirstName = $event.target.value" required ngModel #firstNameVal="ngModel">
+        <input placeholder="First Name" matInput  name="firstNameValidation" [(ngModel)] ="firstName" (input)="outFirstName = $event.target.value" required  #firstNameValidation="ngModel">
       </mat-form-field>
-      <mat-error *ngIf="!firstNameVal.valid">
+      <mat-error *ngIf=" firstNameValidation.invalid &&  firstNameValidation.errors.required">
         First Name Required
       </mat-error>
 
       <mat-form-field>
-        <input placeholder="Last Name" matInput name="lastName" [(ngModel)]="lastName" (input)="outLastName = $event.target.value" required ngModel #lastNameVal="ngModel">
+        <input placeholder="Last Name" matInput name="lastNameValidation" [(ngModel)]="lastName" (input)="outLastName = $event.target.value" required  #lastNameValidation="ngModel">
       </mat-form-field>
-      <mat-error *ngIf="!lastNameVal.valid">
+      <mat-error *ngIf="lastNameValidation.invalid && lastNameValidation.errors.required">
         Last Name Required
       </mat-error>
 
       <mat-form-field>
-        <input placeholder="Email" matInput name="email"  [(ngModel)]="eMail" (input)="outEmail = $event.target.value" required ngModel #emailVal="ngModel">
+        <input placeholder="Email" matInput name="emailValidation"  [(ngModel)]="eMail" (input)="outEmail = $event.target.value" required  #emailValidation="ngModel">
       </mat-form-field>
-      <mat-error *ngIf="!emailVal.valid && emptyMessage()">
+      <mat-error *ngIf="emailValidation.invalid && emailValidation.errors.required &&  emptyMessage()">
         Email Required
       </mat-error>
       <mat-error *ngIf="errorEmailMessage.length > 0" >

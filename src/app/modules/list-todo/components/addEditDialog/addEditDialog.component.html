@@ -6,14 +6,14 @@
       <mat-form-field>
         <input placeholder="Task" matInput name="taskValidation" [(ngModel)]="task" (input)="outTask = $event.target.value" required ngModel #taskValidation="ngModel">
       </mat-form-field>
-      <mat-error *ngIf="!taskValidation.valid">
+      <mat-error *ngIf="taskValidation.invalid && taskValidation.errors.required">
         Task Name Required
       </mat-error>
 
       <mat-form-field>
         <textarea matInput placeholder="Description" name="descriptionValidation" [(ngModel)]="description" (input)="outDescription = $event.target.value" rows="5" required ngModel #descriptionValidation="ngModel"></textarea>
       </mat-form-field>
-      <mat-error *ngIf="!descriptionValidation.valid">
+      <mat-error *ngIf="descriptionValidation.invalid && descriptionValidation.errors.required">
         Description Required
       </mat-error>
 
