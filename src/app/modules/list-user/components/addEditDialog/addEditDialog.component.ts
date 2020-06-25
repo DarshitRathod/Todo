@@ -19,6 +19,7 @@ export interface UsersData {
 })
 export class DialogComponent implements OnInit {
 
+  /********************************************** Properties ******************************************/
   form: FormGroup;
   local_data:any;
   errorEmailMessage="";
@@ -31,12 +32,32 @@ export class DialogComponent implements OnInit {
     email:"",
     action:""
   }
+
+    /********************************************** Constructor ******************************************/
     constructor(
     private dialogRef: MatDialogRef<DialogComponent>,
     private userDataService:UserdataService,
     private dialog: MatDialog,
     @Optional() @Inject(MAT_DIALOG_DATA) private data:UsersData){ }
 
+    /********************************************** Methods ******************************************/
+    ngOnInit(): void {
+      console.log("Data")
+      if(this.data.hasOwnProperty("action")){
+        this.userObj.action = "Add";
+      }
+      if(this.data.hasOwnProperty("id")){
+        this.userObj.id = this.data.id;
+      }
+      if(this.data.hasOwnProperty("email") && this.data.hasOwnProperty("firstName") && this.data.hasOwnProperty("lastName")){
+        this.userObj.email = this.data.email;
+        this.userObj.firstName = this.data.firstName;
+        this.userObj.lastName = this.data.lastName;
+        this.local_data = this.data
+        this.userObj.action = this.local_data.action;
+      }
+       this.userList = this.userDataService.getUserData()
+    }
 
 
     emptyMessage(){
@@ -75,19 +96,19 @@ export class DialogComponent implements OnInit {
     //Check for Update operation
     if(this.userObj.action === "Edit"){
 
-      let flagEditData = true;
+      let isEditData = true;
 
       //Check for conditions
       for(let user of this.userList){
         if(((user.email.toString() === this.userObj.email.trim()) && user.id !== this.userObj.id)){
           this.errorEmailMessage = "Email-id already Exists";
           console.log("User list is ",this.userList);
-          flagEditData = false;
+          isEditData = false;
           break;
         }
       }
 
-    if(flagEditData){
+    if(isEditData){
       this.userObj.id = this.userObj.id;
       this.userObj.firstName = this.userObj.firstName.trim();
       this.userObj.lastName = this.userObj.lastName.trim();
@@ -118,25 +139,6 @@ export class DialogComponent implements OnInit {
     // this.local_data.lastName = this.lastName
     this.dialogRef.close({event:'Cancel'});
     console.log("Closing Dialog ",this.userList);
-  }
-
-
-  ngOnInit(): void {
-    console.log("Data")
-    if(this.data.hasOwnProperty("action")){
-      this.userObj.action = "Add";
-    }
-    if(this.data.hasOwnProperty("id")){
-      this.userObj.id = this.data.id;
-    }
-    if(this.data.hasOwnProperty("email") && this.data.hasOwnProperty("firstName") && this.data.hasOwnProperty("lastName")){
-      this.userObj.email = this.data.email;
-      this.userObj.firstName = this.data.firstName;
-      this.userObj.lastName = this.data.lastName;
-      this.local_data = this.data
-      this.userObj.action = this.local_data.action;
-    }
-     this.userList = this.userDataService.getUserData()
   }
 
 }

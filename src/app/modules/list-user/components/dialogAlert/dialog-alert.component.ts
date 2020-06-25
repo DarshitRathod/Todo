@@ -10,14 +10,16 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 })
 export class DialogAlertComponent implements OnInit {
 
-  msg:string
+  /********************************************** Properties ******************************************/
+  aleartMsg:string
+  /********************************************** Constructor *****************************************/
   constructor(
     private dialogRef: MatDialogRef<DialogAlertComponent>,
-    @Optional() @Inject(MAT_DIALOG_DATA) private data:string)
-    {}
-
+    @Optional() @Inject(MAT_DIALOG_DATA) private aleartMessageFromUserList:string)
+  {}
+  /********************************************** Methods ******************************************/
   ngOnInit(): void {
-    this.msg = this.data
+    this.aleartMsg = this.aleartMessageFromUserList
   }
 
   closeDialog(){

@@ -16,14 +16,23 @@ import { RouterModule } from '@angular/router';
 })
 export class UserlistComponent implements OnInit {
 
+  /********************************************** Properties ******************************************/
   public dataSourceUserList;
   userList:any;
-  constructor(private userDataService:UserdataService,private dialog: MatDialog) { }
-
+  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email','actions'];
   @ViewChild(MatTable,{static:true}) table: MatTable<any>;
 
+  /********************************************** Constructor *****************************************/
+  constructor(private userDataService:UserdataService,private dialog: MatDialog) { }
 
-  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email','actions'];
+  /********************************************** Methods *********************************************/
+
+  ngOnInit(): void {
+    this.dataSourceUserList = this.userDataService.getUserData();
+    this.userList = this.userDataService.getUserData();
+
+    console.log("Data")
+  }
 
   openAddEditDialog(action,obj) {
     obj.action = action;
@@ -72,13 +81,6 @@ export class UserlistComponent implements OnInit {
     }
 
     console.log("After Delete Data is ",this.userList);
-  }
-
-  ngOnInit(): void {
-    this.dataSourceUserList = this.userDataService.getUserData();
-    this.userList = this.userDataService.getUserData();
-
-    console.log("Data")
   }
 
 }
