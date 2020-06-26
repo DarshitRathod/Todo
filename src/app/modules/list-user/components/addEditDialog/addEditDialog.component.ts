@@ -71,18 +71,18 @@ export class DialogComponent implements OnInit {
     //----------------------------------1-way---------------------------------------------------------
     //Check for Add operation
     if(this.userObj.action === "Add"){
-      let flagAddData = true;
+      let isAddData = true;
 
     for(let user of this.userList){
       if(((user.email.toString() === this.userObj.email.trim()) && user.id !== this.userObj.id)){
         this.errorEmailMessage = "Email-id already Exists";
         console.log("User list is ",this.userList);
-        flagAddData = false;
+        isAddData = false;
         break;
       }
     }
 
-    if(flagAddData){
+    if(isAddData){
 
       this.userObj.firstName = this.userObj.firstName.trim();
       this.userObj.lastName = this.userObj.lastName.trim();

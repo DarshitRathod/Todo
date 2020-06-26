@@ -54,7 +54,7 @@ export class UserdataService {
   }
 
   //Users Operations
-  addUser(row_obj){
+  public addUser(row_obj){
     let isUserExist = false;
     this.userAndTodoData['user'].forEach((element) => {
       if (element.email.toString() === row_obj.email) {
@@ -74,7 +74,7 @@ export class UserdataService {
     }
     return false;
   }
-  editUser(row_obj){
+  public editUser(row_obj){
     this.userAndTodoData['user'].forEach((element) => {
       if(element.id === row_obj.id){
         element.id === row_obj.id
@@ -85,7 +85,7 @@ export class UserdataService {
     })
     return true
   }
-  deleteUser(row_obj){
+  public deleteUser(row_obj){
     let isUserTodoExist = true;
     this.userAndTodoData['todo'].forEach((element) => {
       if (element.userid === row_obj.id) {
@@ -107,7 +107,7 @@ export class UserdataService {
   }
 
   //Todos operations
-  addTodo(row_obj,chooseUser){
+  public addTodo(row_obj,chooseUser){
     this.userAndTodoData['todo'].push({
         id: this.userAndTodoData['todo'].length + 1,
         userid:chooseUser,
@@ -116,7 +116,7 @@ export class UserdataService {
     })
     return true;
   }
-  editTodo(row_obj,chooseUser){
+  public editTodo(row_obj,chooseUser){
       this.userAndTodoData['todo'].forEach((element) => {
       if(element.id === row_obj.id && element.userid === chooseUser){
         element.description = row_obj.description;
@@ -127,7 +127,7 @@ export class UserdataService {
    })
    return true;
   }
-  deleteTodo(row_obj,chooseUser){
+  public deleteTodo(row_obj,chooseUser){
     let i = 0
     this.userAndTodoData['todo'].forEach((element)=>{
       if(element.id === row_obj.id && element.userid === chooseUser){

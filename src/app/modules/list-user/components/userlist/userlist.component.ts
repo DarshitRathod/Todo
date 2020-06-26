@@ -51,7 +51,7 @@ export class UserlistComponent implements OnInit {
   }
 
   //Add User
-  addRowData(row_obj){
+  private addRowData(row_obj){
     if(this.userDataService.addUser(row_obj)){
       this.table.renderRows();
     }
@@ -60,7 +60,7 @@ export class UserlistComponent implements OnInit {
   }
 
   //Edit User
-  updateRowData(row_obj){
+  private updateRowData(row_obj){
     if(this.userDataService.editUser(row_obj)){
       this.table.renderRows();
     }
