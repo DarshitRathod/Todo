@@ -4,6 +4,8 @@ import { Injectable, Input } from '@angular/core';
   providedIn: 'root'
 })
 export class UserdataService {
+
+  /********************************************** Properties ******************************************/
   private userAndTodoData =  {
     "user": [{
             "id": 1,
@@ -45,6 +47,10 @@ export class UserdataService {
     ]
   }
 
+  /********************************************** Constructor *****************************************/
+  constructor() { }
+
+  /********************************************** Methods ******************************************/
   public getUserData(){
     return this.userAndTodoData['user'];
   }
@@ -137,5 +143,4 @@ export class UserdataService {
     })
     return true;
   }
-  constructor() { }
 }
