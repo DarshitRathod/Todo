@@ -18,6 +18,7 @@ export interface TodoData {
 })
 export class DialogComponent implements OnInit {
 
+/********************************************** Properties ******************************************/
   form: FormGroup;
   local_data:any;
   todoList:any;
@@ -29,7 +30,7 @@ export class DialogComponent implements OnInit {
     action:"",
   }
 
-
+/********************************************** Constructor ******************************************/
   constructor(
     private dialogRef: MatDialogRef<DialogComponent>,
     private userDataService:UserdataService,
@@ -39,6 +40,25 @@ export class DialogComponent implements OnInit {
 
 
 
+/********************************************** Methods ******************************************/
+
+    ngOnInit(): void {
+  if(this.data.hasOwnProperty("action")){
+    this.todoObj.action = "Add";
+  }
+  if(this.data.hasOwnProperty("id")){
+    this.todoObj.id = this.data.id;
+  }
+  if(this.data.hasOwnProperty("task") && this.data.hasOwnProperty("description")){
+    this.todoObj.task = this.data.task;
+    this.todoObj.description = this.data.description;
+    this.local_data = this.data;
+    this.todoObj.action = this.local_data.action;
+    this.todoObj.userid = this.data.userid;
+  }
+
+  this.todoList = this.userDataService.getTodoData();
+    }
 
     //Task and description field check
     addEditAction(){
@@ -86,24 +106,5 @@ export class DialogComponent implements OnInit {
       this.dialogRef.close({event:'Cancel'});
       console.log("Todo's after closing " ,this.todoList)
     }
-
-
-  ngOnInit(): void {
-    if(this.data.hasOwnProperty("action")){
-      this.todoObj.action = "Add";
-    }
-    if(this.data.hasOwnProperty("id")){
-      this.todoObj.id = this.data.id;
-    }
-    if(this.data.hasOwnProperty("task") && this.data.hasOwnProperty("description")){
-      this.todoObj.task = this.data.task;
-      this.todoObj.description = this.data.description;
-      this.local_data = this.data;
-      this.todoObj.action = this.local_data.action;
-      this.todoObj.userid = this.data.userid;
-    }
-
-    this.todoList = this.userDataService.getTodoData();
-  }
 
 }
