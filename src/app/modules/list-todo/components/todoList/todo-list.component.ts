@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild, Renderer2 } from '@angular/core';
 import { UserdataService } from './../../../../userdata.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DialogComponent } from '../addEditDialog/addEditDialog.component';
 import {Location} from '@angular/common';
 
@@ -25,7 +25,7 @@ export class TodoListComponent implements OnInit {
   @ViewChild(MatTable,{static:true}) table: MatTable<any>;
 
   /********************************************** Constructor ******************************************/
-  constructor(private userDataService:UserdataService,private dialog: MatDialog,private route: ActivatedRoute,private _location: Location) {  }
+  constructor(private userDataService:UserdataService,private dialog: MatDialog,private route: ActivatedRoute,private _location: Location,private router: Router) {  }
 
   /********************************************** Methods ******************************************/
   ngOnInit(): void {
@@ -119,6 +119,7 @@ export class TodoListComponent implements OnInit {
   }
 
   backClicked() {
-    this._location.back();
+    this.router.navigate(['/users']);
+    //this._location.back();
   }
 }

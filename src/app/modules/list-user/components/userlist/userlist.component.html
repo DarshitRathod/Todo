@@ -65,7 +65,7 @@
     </ng-container>
     <ng-container *ngIf="column !== 'actions' && column !== 'id'">
       <td mat-cell *matCellDef="let element">
-        <label [routerLink]="['todo', element.id]" style="outline: none;">
+        <label (click)="onClickGoToToDoList(element.id)" style="outline: none;">
           {{element[column]}}
          </label>
       </td>

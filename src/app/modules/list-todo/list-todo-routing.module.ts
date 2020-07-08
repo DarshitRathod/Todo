@@ -4,7 +4,7 @@ import {TodoListComponent} from '../list-todo/components/todoList/todo-list.comp
 
 
 const routes: Routes = [
-  {path:'todo/listTodo/:id',component:TodoListComponent},
+  {path:'todo/listTodo',component:TodoListComponent},
 ];
 
 @NgModule({

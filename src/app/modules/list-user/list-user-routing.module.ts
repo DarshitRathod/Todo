@@ -6,8 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {path:'',component:UserlistComponent},
-  {path:'users/todo/:id',redirectTo:'todo/listTodo/:id',pathMatch:'full'},
-  {path:'todo/:id',redirectTo:'todo/listTodo/:id',pathMatch:'full'},
+  //{path:'users/todo/:id',redirectTo:'todo/listTodo/:id',pathMatch:'full'},
+  //{path:'todo/:id',redirectTo:'todo/listTodo/:id',pathMatch:'full'},
 ];
 
 @NgModule({

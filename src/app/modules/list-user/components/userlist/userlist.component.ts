@@ -5,7 +5,7 @@ import { DialogComponent } from '../addEditDialog/addEditDialog.component';
 import { DialogAlertComponent } from './../dialogAlert/dialog-alert.component';
 import { UserdataService } from './../../../../userdata.service';
 import { Component, OnInit ,ViewChild,NgZone, Renderer2, ElementRef} from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 
 
 @Component({
@@ -18,12 +18,12 @@ export class UserlistComponent implements OnInit {
 
   /********************************************** Properties ******************************************/
   public dataSourceUserList;
-  userList:any;
+  public userList:any;
   displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email','actions'];
   @ViewChild(MatTable,{static:true}) table: MatTable<any>;
 
   /********************************************** Constructor *****************************************/
-  constructor(private userDataService:UserdataService,private dialog: MatDialog) { }
+  constructor(private userDataService:UserdataService,private dialog: MatDialog,private router: Router) { }
 
   /********************************************** Methods *********************************************/
 
@@ -81,6 +81,10 @@ export class UserlistComponent implements OnInit {
     }
 
     console.log("After Delete Data is ",this.userList);
+  }
+
+  onClickGoToToDoList(userId){
+    this.router.navigate(['todo/listTodo',{id:userId}]);
   }
 
 }
